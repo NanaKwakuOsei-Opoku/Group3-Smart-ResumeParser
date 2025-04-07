@@ -29,15 +29,6 @@ except OSError:
 from models import ResumeInfo, Education, Experience
 
 def parse_resume(pdf_path):
-    """
-    Extract text from a PDF resume, using OCR if necessary.
-    
-    Args:
-        pdf_path (str): Path to the PDF file
-        
-    Returns:
-        str: Extracted text from the resume
-    """
     try:
         logger.debug(f"Opening PDF: {pdf_path}")
         text = ""
@@ -70,15 +61,6 @@ def parse_resume(pdf_path):
         return None
 
 def extract_information(text):
-    """
-    Extract structured information from resume text.
-    
-    Args:
-        text (str): Text extracted from a resume
-        
-    Returns:
-        ResumeInfo: Structured information from the resume
-    """
     if not text:
         return None
     
@@ -112,7 +94,6 @@ def extract_information(text):
         return None
 
 def extract_name(doc, text):
-    """Extract the candidate's name from the resume"""
     # First, try to use a heuristic based on the first few lines
     lines = text.splitlines()
     for line in lines[:5]:
@@ -147,7 +128,6 @@ def extract_name(doc, text):
     return "Unknown Name"
 
 def extract_contact_info(text):
-    """Extract contact information from resume text"""
     contact = {
         "email": "",
         "phone": "",
@@ -176,7 +156,6 @@ def extract_contact_info(text):
     return contact
 
 def extract_skills(text):
-    """Extract skills from resume text using regex for word boundaries."""
     # Common skill keywords to look for
     common_skills = [
         # Programming languages
@@ -234,7 +213,6 @@ def extract_skills(text):
 
 
 def is_valid_skill(text):
-    """Determine if a piece of text is likely to be a skill rather than a sentence or phrase."""
     if not text or len(text) < 2:
         return False
     
@@ -262,7 +240,6 @@ def is_valid_skill(text):
     return True
 
 def extract_education(text, doc):
-    """Extract education information"""
     education_list = []
     
     # Common education section headers
