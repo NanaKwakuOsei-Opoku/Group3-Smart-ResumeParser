@@ -6,29 +6,9 @@ logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
 
 def similarity_score(a, b):
-    """
-    Calculate string similarity between two strings.
-    
-    Args:
-        a, b: Strings to compare
-        
-    Returns:
-        float: Similarity score between 0 and 1
-    """
     return SequenceMatcher(None, a.lower(), b.lower()).ratio()
 
 def match_skills(candidate_skills, required_skills, threshold=0.8):
-    """
-    Match candidate skills to required skills.
-    
-    Args:
-        candidate_skills (list): Candidate's skills.
-        required_skills (list): Required skills.
-        threshold (float): Similarity threshold.
-        
-    Returns:
-        tuple: (List of matched skills, List of missing skills)
-    """
     matched_skills = []
     missing_skills = required_skills.copy()
     
@@ -45,17 +25,6 @@ def match_skills(candidate_skills, required_skills, threshold=0.8):
     return matched_skills, missing_skills
 
 def match_candidates(resumes_data, required_skills, min_experience):
-    """
-    Find candidates matching job requirements while avoiding duplicate entries.
-    
-    Args:
-        resumes_data (dict): Dictionary of parsed resumes.
-        required_skills (list): Required skills.
-        min_experience (float): Minimum years of experience.
-        
-    Returns:
-        list: List of matching candidates with scores.
-    """
     matching_candidates = []
     seen_keys = set()  # Using email if available, otherwise name
     
@@ -101,16 +70,6 @@ def match_candidates(resumes_data, required_skills, min_experience):
     return matching_candidates
 
 def rank_candidates(candidates, required_skills):
-    """
-    Rank candidates by match score.
-    
-    Args:
-        candidates (list): List of matching candidates.
-        required_skills (list): Required skills.
-        
-    Returns:
-        list: Sorted list of candidates by match score.
-    """
     sorted_candidates = sorted(candidates, key=lambda x: x['match_score'], reverse=True)
     for i, candidate in enumerate(sorted_candidates):
         candidate['rank'] = i + 1
