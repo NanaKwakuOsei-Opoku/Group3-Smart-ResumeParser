@@ -1,0 +1,87 @@
+/* Custom CSS for resume parser application */
+
+/* Spacing utilities */
+.mb-5 {
+    margin-bottom: 3rem !important;
+}
+
+/* Resume card highlight */
+.candidate-card {
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.candidate-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 0.5rem 1rem var(--bs-info) !important;
+}
+
+/* Skill tags */
+.skill-tag {
+    display: inline-block;
+    background-color: var(--bs-dark);
+    color: var(--bs-light);
+    border-radius: 1.5rem;
+    padding: 0.25rem 0.75rem;
+    margin: 0.15rem;
+    font-size: 0.8rem;
+}
+
+.skill-matched {
+    background-color: var(--bs-success);
+}
+
+.skill-missing {
+    background-color: var(--bs-danger);
+}
+
+/* Progress bar for match score */
+.match-score-bar {
+    height: 0.5rem;
+    margin-top: 0.5rem;
+}
+
+/* Experience badge */
+.experience-badge {
+    background-color: var(--bs-info);
+    color: var(--bs-dark);
+    border-radius: 50%;
+    width: 3rem;
+    height: 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 1rem;
+}
+
+/* Dropzone styling */
+.dropzone {
+    border: 2px dashed var(--bs-info);
+    border-radius: 5px;
+    padding: 3rem;
+    text-align: center;
+    cursor: pointer;
+    background-color: var(--bs-dark);
+}
+
+.dropzone:hover {
+    border-color: var(--bs-primary);
+    background-color: rgba(13, 110, 253, 0.1);
+}
+
+/* Animations */
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+.pulse {
+    animation: pulse 2s infinite;
+}

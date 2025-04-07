@@ -1,0 +1,115 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="row">
+    <div class="col-lg-12 mb-4">
+        <div class="card bg-dark">
+            <div class="card-body">
+                <h1 class="card-title">
+                    <i class="fas fa-list-ol me-2"></i>
+                    Candidate Recommendations
+                </h1>
+                <div class="card-text">
+                    <p>Showing top candidates matching your job requirements:</p>
+                    <div class="d-flex flex-wrap">
+                        <div class="me-4 mb-2">
+                            <strong>Required Skills:</strong>
+                            {% for skill in required_skills %}
+                                <span class="skill-tag">{{ skill }}</span>
+                            {% endfor %}
+                        </div>
+                        <div class="me-4 mb-2">
+                            <strong>Minimum Experience:</strong>
+                            <span class="badge bg-info text-dark">{{ min_experience }} years</span>
+                        </div>
+                        <div class="mb-2">
+                            <strong>Matching Candidates:</strong>
+                            <span class="badge bg-success">{{ matching_count }}/{{ total_candidates }}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% if candidates %}
+<div class="row">
+    {% for candidate in candidates %}
+    <div class="col-lg-6 mb-4">
+        <div class="card candidate-card">
+            <div class="card-header bg-dark d-flex justify-content-between align-items-center">
+                <h5 class="mb-0">
+                    {% if candidate.rank <= 3 %}
+                        <i class="fas fa-medal text-{{ ['warning', 'secondary', 'success'][candidate.rank-1] }} me-2"></i>
+                    {% endif %}
+                    {{ candidate.name }}
+                </h5>
+                <div class="d-flex align-items-center">
+                    <span class="badge bg-primary me-2">Score: {{ (candidate.match_score * 100)|round(1) }}%</span>
+                    <div class="experience-badge">
+                        {{ candidate.total_experience|round(1) }}y
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="mb-3">
+                    <span class="d-flex align-items-center mb-2">
+                        <i class="fas fa-check-circle me-2 text-success"></i>
+                        <strong>Matched Skills:</strong>
+                    </span>
+                    {% if candidate.matched_skills %}
+                        {% for skill in candidate.matched_skills %}
+                            <span class="skill-tag skill-matched">{{ skill }}</span>
+                        {% endfor %}
+                    {% else %}
+                        <em>No skills matched</em>
+                    {% endif %}
+                </div>
+
+                <div class="mb-3">
+                    <span class="d-flex align-items-center mb-2">
+                        <i class="fas fa-times-circle me-2 text-danger"></i>
+                        <strong>Missing Skills:</strong>
+                    </span>
+                    {% if candidate.missing_skills %}
+                        {% for skill in candidate.missing_skills %}
+                            <span class="skill-tag skill-missing">{{ skill }}</span>
+                        {% endfor %}
+                    {% else %}
+                        <em>No missing skills</em>
+                    {% endif %}
+                </div>
+
+                <div class="mb-3">
+                </div>
+                <div class="match-score">
+                    <div class="d-flex justify-content-between">
+                        <span>Match Score</span>
+                        <span>{{ (candidate.match_score * 100)|round(1) }}%</span>
+                    </div>
+                    <div class="progress match-score-bar">
+                        <div class="progress-bar bg-success" role="progressbar" 
+                             style="width: {{ (candidate.match_score * 100)|round(1) }}%" 
+                             aria-valuenow="{{ (candidate.match_score * 100)|round(1) }}" 
+                             aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% else %}
+<div class="alert alert-info">
+    <i class="fas fa-info-circle me-2"></i>
+    No candidates match your job requirements. Try adjusting your criteria.
+</div>
+{% endif %}
+
+<div class="text-center mt-4">
+    <a href="/" class="btn btn-primary">
+        <i class="fas fa-arrow-left me-2"></i> Back to Home
+    </a>
+</div>
+{% endblock %}
